@@ -1,0 +1,1 @@
+The Python modules are an introduction to the new 42 curriculum that was introduced to Codam Coding College in late 2025. I have written the exercises in both C++ as well as Python to maximize my knowledge and expertise in OOP programming.
