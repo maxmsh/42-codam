@@ -1,2 +1,2 @@
-# 42-codam
-My git clone of the 42 curriculum at Codam, a tuition free coding campus based in Amsterdam.
+# 42-curriculum
+A git copy of the exercises I made for my curriculum of Codam, a 42 campus in the Netherlands.
