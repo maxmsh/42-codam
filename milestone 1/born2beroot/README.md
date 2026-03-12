@@ -1,0 +1,1 @@
+Born2BeRoot is a simple exercise in setting up your own virtual machine and configuring system settings, such as user privileges and password security features. This was a no-code exercise and thus only the signature of my virtual machine was submitted.
