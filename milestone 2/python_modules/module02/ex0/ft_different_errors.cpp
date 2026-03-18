@@ -1,18 +1,22 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
+#include <fstream>
 #include <exception>
 
 void	garden_operations(void)
 {
-	int	input;
+	int	input, error_types = 0;
 	std::string filename;
 
 	try
 	{
-		input = 0;
-		std::cout << "Please enter input: " << std::endl; // User is prompted to give input
-		std::cin >> input;
+		std::cout << "What type of errors would you like to test? 1 = int, 2 = string: ";
+		std::cin >> error_types;
+		if (error_types == 1) // By default, the error type to test is integer input -- which corresponds to 0
+		{
+			std::cout << "\n" << "Please enter integer input: " << std::endl; // User is prompted to give integer input
+			std::cin >> input;
 		if (std::cin.fail())
 		{
 			std::cout << "Testing ValueError..." << std::endl;
@@ -30,6 +34,22 @@ void	garden_operations(void)
 			std::cin.clear();
 			std::cout << "Try again, please. " << std::endl;
 			std::cin >> input;
+		}
+		else
+		{
+			std::cout << "Your input of " << input << " was valid!" << std::endl;
+		}
+		}
+		else if (error_types == 2)
+		{
+			std::cout << "\n" << "Please enter a valid filename: " << std::endl;
+			std::cin >> filename;
+			std::cout << "No. Fuck you. " << std::endl;
+
+		}
+		else if (error_types != 1 && error_types != 2)
+		{
+			std::cout << "No valid error type was specified." << std::endl;
 		}
 	}
 	catch(const std::invalid_argument &e)
