@@ -6,48 +6,58 @@
 
 void	garden_operations(void)
 {
-	int	input, error_types = 0;
+	std::string error_types, choose;
+	int	input = 0;
+	float num, divisor;
 	std::string filename;
 
 	try
 	{
-		std::cout << "What type of errors would you like to test? 1 = int, 2 = string: ";
+		std::cout << "Would you like to test int or string errors? ";
 		std::cin >> error_types;
-		if (error_types == 1) // By default, the error type to test is integer input -- which corresponds to 0
+		if ((error_types == "int") || (error_types == "int errors")) // By default, the error type to test is integer input -- which corresponds to 0
 		{
-			std::cout << "\n" << "Please enter integer input: " << std::endl; // User is prompted to give integer input
+			std::cout << "Would you like to test value errors or division errors? ";
+			std::cin >> choose;
+			if ((choose == "value") || (choose == "value errors"))
+			{
+			std::cout << "\n" << "Please enter valid integer input: " << std::endl; // User is prompted to give integer input
 			std::cin >> input;
 		if (std::cin.fail())
 		{
 			std::cout << "Testing ValueError..." << std::endl;
 			throw std::invalid_argument("Caught ValueError: invalid literal for int()"); // If the value the user has put in is invalid, then they will see a TypeError message
-			std::cin.ignore(10, '\n');
-			std::cin.clear();
-			std::cout << "Try again, please. " << std::endl;
-			std::cin >> input;
-		}
-		else if (input == 0)
-		{
-			std::cout << "Testing ZeroDivisionError..." << std::endl;
-			throw std::runtime_error("Caught ZeroDivisionError: division by zero"); // This is mainly used for testing purposes, but division by 0 should not be possible
-			std::cin.ignore(10000, '\n');
-			std::cin.clear();
-			std::cout << "Try again, please. " << std::endl;
-			std::cin >> input;
 		}
 		else
 		{
-			std::cout << "Your input of " << input << " was valid!" << std::endl;
+			std::cout << "Your integer value of " << input << "was accepted!" << std::endl;
 		}
 		}
-		else if (error_types == 2)
+		else if ((choose == "division") || (choose == "division errors"))
+		{
+			std::cout << "Please enter the first of two number inputs to perform a division: " << std::endl;
+			std::cin >> num;
+			std::cout << "First number of " << num << " selected. Now enter a second value: " << std::endl;
+			std::cin >> divisor;
+			if ((num == 0) || (divisor == 0))
+			{
+				std::cout << "Testing ZeroDivisionError..." << std::endl;
+				throw std::runtime_error("Caught ZeroDivisionError: division by zero");
+			}
+			else
+			{
+				std::cout << "Number values of " << num << " and " << divisor << " are valid to make a division!" << std::endl;
+			}
+		}
+		}
+		else if ((error_types == "string") || (error_types == "string errors"))
 		{
 			std::cout << "\n" << "Please enter a valid filename: " << std::endl;
 			std::cin >> filename;
 			std::cout << "No. Fuck you. " << std::endl;
 
 		}
-		else if (error_types != 1 && error_types != 2)
+		else if (error_types != "int" && error_types != "int errors" && error_types != "string" && error_types != "string errors")
 		{
 			std::cout << "No valid error type was specified." << std::endl;
 		}
