@@ -19,7 +19,7 @@ void	garden_operations(void)
 		{
 			std::cout << "Would you like to test value errors or division errors? ";
 			std::cin >> choose;
-			if ((choose == "value") || (choose == "value errors"))
+			if ((choose == "value") || (choose == "Value") || (choose == "value errors"))
 			{
 			std::cout << "\n" << "Please enter valid integer input: " << std::endl; // User is prompted to give integer input
 			std::cin >> input;
@@ -30,10 +30,10 @@ void	garden_operations(void)
 		}
 		else
 		{
-			std::cout << "Your integer value of " << input << "was accepted!" << std::endl;
+			std::cout << "Your integer value of " << input << " was accepted!" << std::endl;
 		}
 		}
-		else if ((choose == "division") || (choose == "division errors"))
+		else if ((choose == "division") || (choose == "Division") || (choose == "division errors"))
 		{
 			std::cout << "Please enter the first of two number inputs to perform a division: " << std::endl;
 			std::cin >> num;
@@ -49,6 +49,10 @@ void	garden_operations(void)
 				std::cout << "Number values of " << num << " and " << divisor << " are valid to make a division!" << std::endl;
 			}
 		}
+		}
+		else if ((error_types == "errors") || (error_types == "Errors"))
+		{
+			std::cout << "Please specify." << std::endl;
 		}
 		else if ((error_types == "string") || (error_types == "string errors"))
 		{
