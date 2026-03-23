@@ -5,8 +5,6 @@
 #include <limits>
 #include <fstream>
 #include <cstdio>
-#include <bits/stdc++.h>
-#include <map>
 
 void	garden_operations(std::string num, int divisor, const char *filename)
 {
@@ -26,12 +24,12 @@ void	garden_operations(std::string num, int divisor, const char *filename)
 	}
 	try
 	{
-		if (number == 0 || divisor == 0)
+		if (divisor == 0)
 		{
-			throw std::overflow_error("");
+			throw std::runtime_error("");
 		}
 	}
-	catch (const std::overflow_error &e)
+	catch (const std::runtime_error &e)
 	{
 		std::cout << "Testing ZeroDivisionError..." << "\n";
 		std::cout << "Caught ZeroDivisionError: division by zero" << "\n" << std::endl;
@@ -49,15 +47,6 @@ void	garden_operations(std::string num, int divisor, const char *filename)
 		std::cout << "Testing FileNotFoundError..." << "\n";
 		std::cout << "Caught FileNotFoundError: No such file '" << filename << "'" << "\n" << std::endl;
 	}
-	try
-	{
-		/* code */
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-	
 }
 
 int	main(void)

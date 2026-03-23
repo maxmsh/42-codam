@@ -6,9 +6,9 @@ def check_temperature(temp_str) -> int:
         else:
             typecasted = int(temp_str)
 
-        if typecasted > 40:
+        if typecasted >= 40:
             raise ValueError("hot")
-        elif typecasted < 0:
+        elif typecasted <= 0:
             raise ValueError("cold")
         else:
             print(f"{typecasted}°C is perfect for plants!")
