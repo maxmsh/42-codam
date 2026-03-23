@@ -2,12 +2,15 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
+#include <limits>
 
-void	garden_operations(int num, int divisor, std::string filename)
+void	garden_operations(std::string num, int divisor, std::string filename)
 {
+	int number;
 	try
 	{
-		if (!std::isdigit(num))
+		number = std::stoi(num);
+		if (!number)
 		{
 			throw std::invalid_argument("");
 		}
@@ -15,25 +18,34 @@ void	garden_operations(int num, int divisor, std::string filename)
 	catch (const std::invalid_argument &e)
 	{
 		std::cout << "Testing ValueError..." << "\n";
-		std::cout << "Caught ValueError: invalid literal for int()" << std::endl;
+		std::cout << "Caught ValueError: invalid literal for int()" << "\n" << std::endl;
 	}
 	try
 	{
-		if (num == 0 || divisor == 0)
+		if (number == 0 || divisor == 0)
 		{
-			throw std::logic_error("");
+			throw std::overflow_error("");
 		}
 	}
-	catch (const std::logic_error &e)
+	catch (const std::overflow_error &e)
 	{
 		std::cout << "Testing ZeroDivisionError..." << "\n";
-		std::cout << "Caught ZeroDivisionError: division by zero" << std::endl;
+		std::cout << "Caught ZeroDivisionError: division by zero" << "\n" << std::endl;
 	}
+	try
+	{
+		/* code */
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+	
 }
 
 int	main(void)
 {
 	std::cout << "=== Garden Error Types Demo ==="
 				<< "\n\n";
-	garden_operations('i', 0, "missing.txt");
+	garden_operations("e", 0, "missing.txt");
 }
