@@ -11,11 +11,11 @@ int	check_temperature(std::string temp_str)
 	{
 	typecasted = std::stoi(temp_str);
 
-	if (typecasted > 40)
+	if (typecasted >= 40)
 	{
 		throw std::out_of_range("hot");
 	}
-	else if (typecasted < 0)
+	else if (typecasted <= 0)
 	{
 		throw std::out_of_range("cold");
 	}

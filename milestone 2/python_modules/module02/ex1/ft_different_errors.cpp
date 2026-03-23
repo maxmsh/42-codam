@@ -3,8 +3,12 @@
 #include <stdexcept>
 #include <string>
 #include <limits>
+#include <fstream>
+#include <cstdio>
+#include <bits/stdc++.h>
+#include <map>
 
-void	garden_operations(std::string num, int divisor, std::string filename)
+void	garden_operations(std::string num, int divisor, const char *filename)
 {
 	int number;
 	try
@@ -31,6 +35,19 @@ void	garden_operations(std::string num, int divisor, std::string filename)
 	{
 		std::cout << "Testing ZeroDivisionError..." << "\n";
 		std::cout << "Caught ZeroDivisionError: division by zero" << "\n" << std::endl;
+	}
+	try
+	{
+		FILE* file = fopen(filename, "r");	
+		if (!file)
+		{
+			throw std::logic_error("");
+		}	
+	}
+	catch(const std::logic_error& e)
+	{
+		std::cout << "Testing FileNotFoundError..." << "\n";
+		std::cout << "Caught FileNotFoundError: No such file '" << filename << "'" << "\n" << std::endl;
 	}
 	try
 	{
