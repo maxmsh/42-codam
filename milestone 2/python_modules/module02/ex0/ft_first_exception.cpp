@@ -21,6 +21,12 @@ int	check_temperature(std::string temp_str)
 		{
 			throw std::invalid_argument("hot");
 		}
+
+		// The errors are marked with either a "hot" or "cold" message in order to
+		// differentiate between them in the catch block. That way, I can make
+		// a unique message print to the terminal depending on whether the
+		// input value is too high or too low.
+
 		else if (typecasted < 0)
 		{
 			throw std::invalid_argument("cold");
