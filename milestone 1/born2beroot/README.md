@@ -8,11 +8,11 @@ To start this exercise off with, one should decide what operating system they wo
 
 ## Package Managers ##
 
-Package managers like apt and aptitude are used to search and/or (de)install packages from the internet. 
+Package managers like apt and aptitude are used to search and/or (de)install packages from the internet.  
 
 ## User Permissions ##
 
-An important part of Born2BeRoot is managing user permissions effectively. It may happen that when you start your virtual machine, sudo is not preinstalled and you'll have to log in as root
+An important part of Born2BeRoot is managing user permissions effectively. It may happen that when you start your virtual machine, sudo is not preinstalled and you'll have to log in as root to gain access to superuser permissions. 
 
 ## AppArmor/SELinux ##
 
