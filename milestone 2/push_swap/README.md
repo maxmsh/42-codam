@@ -1,1 +1,5 @@
-push_swap is a project that requires you to create a complex sorting algorithm that can handle and sort the most extreme input out there in the most efficient manner possible, whilst being limited to a certain amount of operations you're allowed to use. 
+push_swap is a project that requires you to sort a certain amount of integers using the most efficient sorting algorithm you can implement. However, there are only a handful of operations that you are allowed to make use of; such as push (push an integer from one stack to another), swap (switch the positions of the first and second integer), rotate and reverse rotate. The efficiency of your sorting algorithm is generally determined by how many of these operations your program needs to successfully sort a number of integers.
+
+Under the hood, push_swap is supposed to create two 'stacks', which are kind of like towers made out of Lego bricks. In this metaphor, every brick would represent one integer value in the tower. Stack A contains the values that push_swap received from the user input while stack B is always initialized as an empty stack. This is because stack B is meant to temporarily hold onto some of stack A's values while the rest of its values are getting sorted.  
+
+Because the concept of sorting algorithms was still fairly new to me, I decided to implement an algorithm called radix sort. 
