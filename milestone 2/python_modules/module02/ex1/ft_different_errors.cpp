@@ -1,57 +1,28 @@
-#include <cctype>
 #include <iostream>
-#include <stdexcept>
 #include <string>
-#include <limits>
-#include <fstream>
-#include <cstdio>
 
-void	garden_operations(std::string num, int divisor, const char *filename)
+int	garden_operations(const std::string &input)
 {
-	int number;
 	try
 	{
-		number = std::stoi(num);
-		if (!number)
-		{
-			throw std::invalid_argument("");
-		}
+		return (std::stoi(input));
 	}
 	catch (const std::invalid_argument &e)
 	{
-		std::cout << "Testing ValueError..." << "\n";
-		std::cout << "Caught ValueError: invalid literal for int()" << "\n" << std::endl;
+		std::cout << "Caught ValueError: invalid literal for int()" << std::endl;
 	}
-	try
-	{
-		if (divisor == 0)
-		{
-			throw std::runtime_error("");
-		}
-	}
-	catch (const std::runtime_error &e)
-	{
-		std::cout << "Testing ZeroDivisionError..." << "\n";
-		std::cout << "Caught ZeroDivisionError: division by zero" << "\n" << std::endl;
-	}
-	try
-	{
-		FILE* file = fopen(filename, "r");	
-		if (!file)
-		{
-			throw std::logic_error("");
-		}	
-	}
-	catch(const std::logic_error& e)
-	{
-		std::cout << "Testing FileNotFoundError..." << "\n";
-		std::cout << "Caught FileNotFoundError: No such file '" << filename << "'" << "\n" << std::endl;
-	}
+}
+
+void	test_error_types(void)
+{
+	std::cout << "Testing ValueError..."
+				<< "\n";
+	garden_operations("abc");
 }
 
 int	main(void)
 {
 	std::cout << "=== Garden Error Types Demo ==="
 				<< "\n\n";
-	garden_operations("e", 0, "missing.txt");
+	test_error_types();
 }
