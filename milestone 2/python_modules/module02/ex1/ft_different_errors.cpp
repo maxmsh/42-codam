@@ -63,7 +63,10 @@ int	garden_operations(const string &input, bool silent)
 	catch(const invalid_argument &e)
 	{
 		if (silent == false)
-			cout << "Caught ValueError: invalid literal for int()" << '\n';
+		{
+			cerr << "Caught ValueError: invalid literal for int()" << "\n";
+			throw ValueError();
+		}
 		else
 			throw SignalException();
 	}
@@ -72,15 +75,15 @@ int	garden_operations(const string &input, bool silent)
 		if (silent == false)
 		{
 			cout << "\nTesting ZeroDivisionError..." << endl;
-			numb = (num * 1.0);
-			result = (numb / 0);
-			return result;
+			// numb = (num * 1.0);
+			// result = (numb / 0);
+			// return result;
 		}
 	}
 	catch(const runtime_error &e)
 	{
 		if (silent == false)
-			cout << "Caught ZeroDivisionError: division by zero" << '\n';
+			throw ZeroDivisionError();
 		else
 			throw SignalException();
 	}
@@ -92,7 +95,7 @@ int	garden_operations(const string &input, bool silent)
 void	test_error_types(void)
 {
 	garden_operations("abc", false);
-	// garden_operations("15", false);
+	garden_operations("15", false);
 }
 
 int	main(void)

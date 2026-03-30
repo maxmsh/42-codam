@@ -8,3 +8,6 @@ class PlantError(GardenError):
 class WaterError(GardenError):
     def __init__(self)
         
+def custom_garden_errors():
+    try:
+        
