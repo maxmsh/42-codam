@@ -1,33 +1,72 @@
-def garden_operations(value) -> None:
+class SignalException(Exception):
+    pass
+
+
+def garden_operations(value: str, silent: bool = False) -> None:
     try:
-        # div = value(int) / 0
-        return int(value)
+        if isinstance(value, str) and "." not in value and "key" not in value:
+            if not silent:
+                print("\nTesting ValueError...")
+            int(value)
     except ValueError as e:
-        print(f"Caught {type(e).__name__}: {e}")
-    # try:
-    #     return div
-    # except ZeroDivisionError as e:
-    #     print(f"Caught {type(e).__name__}: {e}")
-    # try:
-    #     return open(value, 'r')
-    # except FileNotFoundError as e:
-    #     print(f"Caught {type(e).__name__}: {e}")
-    # try:
-    #     d = {}
-    #     print(d[value])
-    # except KeyError as e:
-    #     print(f"Caught {type(e).__name__}: {e}")
+        if not silent:
+            print(f"Caught {type(e).__name__}: {e}")
+        else:
+            raise SignalException
+            return
+
+    try:
+        if isinstance(value, int):
+            if not silent:
+                print("\nTesting ZeroDivisionError...")
+            num = int(value)
+            num / 0
+    except ZeroDivisionError as e:
+        if not silent:
+            print(f"Caught {type(e).__name__}: {e}")
+        else:
+            raise SignalException
+            return
+
+    try:
+        if isinstance(value, str) and "." in value:
+            if not silent:
+                print("\nTesting FileNotFoundError...")
+            open(str(value), "r")
+    except FileNotFoundError as e:
+        if not silent:
+            print(f"Caught {type(e).__name__}: {e}")
+        else:
+            raise SignalException
+            return
+
+    try:
+        if isinstance(value, str) and "key" in value:
+            if not silent:
+                print("\nTesting KeyError...")
+            mydict = {"name": "dictionary"}
+            print(mydict[str(value)])
+    except KeyError as e:
+        if not silent:
+            print(f"Caught {type(e).__name__}: {e}")
+        else:
+            raise SignalException
+            return
 
 
 def test_error_types():
-    print("\nTesting ValueError...")
     garden_operations("abc")
-    # print("\nTesting ZeroDivisionError...")
-    # garden_operations(15)
-    # print("\nTesting FileNotFoundError...")
-    # garden_operations('missing.txt')
-    # print("\nTesting KeyError...")
-    # garden_operations('missing_key')
+    garden_operations(15)
+    garden_operations("missing.txt")
+    garden_operations("missing_key")
+    print("\nTesting multiple errors together...")
+    try:
+        garden_operations("s", silent=True)
+        garden_operations(8, silent=True)
+        garden_operations("orion", silent=True)
+        garden_operations("missin", silent=True)
+    except (SignalException):
+        print("Caught an error, but program still runs!")
 
 
 if __name__ == "__main__":
