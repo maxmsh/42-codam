@@ -3,15 +3,6 @@
 #include <stdexcept>
 using namespace std;
 
-class ValueError : public std::exception
-{
-	public:
-	const char* what() const noexcept override
-	{
-		return "\nCaught ValueError: ";
-	}
-};
-
 class ZeroDivisionError : public std::exception
 {
 	public:
@@ -56,17 +47,14 @@ int	garden_operations(const string &input, bool silent)
 	{
 		if (silent == false)
 		{
-			cout << "\nTesting ValueError..." << endl;
+			cout << "\nTesting ValueError...\n";
 			num = stoi(input);
 		}
 	}
 	catch(const invalid_argument &e)
 	{
 		if (silent == false)
-		{
-			cerr << "Caught ValueError: invalid literal for int()" << "\n";
-			throw ValueError();
-		}
+			cerr <<"Caught ValueError: invalid literal for int()" << endl;
 		else
 			throw SignalException();
 	}

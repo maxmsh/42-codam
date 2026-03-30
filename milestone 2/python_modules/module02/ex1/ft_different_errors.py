@@ -66,7 +66,7 @@ def test_error_types():
         garden_operations("orion", silent=True)
         garden_operations("missin", silent=True)
     except (SignalException):
-        print("Caught an error, but program still runs!")
+        print("Caught an error, but program still continues!")
 
 
 if __name__ == "__main__":
