@@ -1,39 +1,104 @@
 #include <iostream>
 #include <string>
+#include <stdexcept>
+using namespace std;
 
-int	garden_operations(const std::string &input)
+class ValueError : public std::exception
 {
+	public:
+	const char* what() const noexcept override
+	{
+		return "\nCaught ValueError: ";
+	}
+};
+
+class ZeroDivisionError : public std::exception
+{
+	public:
+	const char* what() const noexcept override
+	{
+		return "\nCaught ZeroDivisionError: ";
+	}
+};
+
+class FileNotFoundError : public std::exception
+{
+	public:
+	const char* what() const noexcept override
+	{
+		return "\nCaught FileNotFoundError: ";
+	}
+};
+
+class KeyError : public std::exception
+{
+	public:
+	const char* what() const noexcept override
+	{
+		return "\nCaught KeyError: ";
+	}
+};
+
+class SignalException : public std::exception
+{
+	public:
+	const char* what() const noexcept override
+	{
+		return "\nCaught an error, but program continues!";
+	}
+};
+
+int	garden_operations(const string &input, bool silent)
+{
+	int num, result;
+	double numb;
 	try
 	{
-		int number = std::stoi(input);
-		if (!number)
-			throw std::invalid_argument("invalid literal for int()\n");
-		if (number == 0)
-			throw std::runtime_error("division by zero\n");
+		if (silent == false)
+		{
+			cout << "\nTesting ValueError..." << endl;
+			num = stoi(input);
+		}
 	}
-	catch (const std::invalid_argument &e)
+	catch(const invalid_argument &e)
 	{
-		std::cout << "Caught ValueError: " << e.what() << std::endl;
+		if (silent == false)
+			cout << "Caught ValueError: invalid literal for int()" << '\n';
+		else
+			throw SignalException();
 	}
-	catch (const std::runtime_error &e)
+	try
 	{
-		std::cout << "Caught ZeroDivisionError: " << e.what() << std::endl;
+		if (silent == false)
+		{
+			cout << "\nTesting ZeroDivisionError..." << endl;
+			numb = (num * 1.0);
+			result = (numb / 0);
+			return result;
+		}
 	}
+	catch(const runtime_error &e)
+	{
+		if (silent == false)
+			cout << "Caught ZeroDivisionError: division by zero" << '\n';
+		else
+			throw SignalException();
+	}
+	
+	
 	return 0;
 }
 
 void	test_error_types(void)
 {
-	std::cout << "\nTesting ValueError...\n";
-	garden_operations("abc");
-	std::cout << "\nTesting ZeroDivisionError...\n";
-	garden_operations("15");
-	std::cout << "\n";
+	garden_operations("abc", false);
+	// garden_operations("15", false);
 }
 
 int	main(void)
 {
-	std::cout << "=== Garden Error Types Demo ==="
-				<< "\n";
+	cout << "=== Garden Error Types Demo ==="
+				<< "\n\n";
 	test_error_types();
+	cout << "\nAll error types tested succesfully!" << endl;
 }
