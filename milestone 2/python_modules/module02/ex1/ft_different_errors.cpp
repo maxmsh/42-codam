@@ -3,6 +3,7 @@
 #include <fstream>
 #include <filesystem>
 #include <stdexcept>
+#include <map>
 using namespace std;
 
 class SignalException : public std::exception
@@ -19,6 +20,10 @@ int	garden_operations(const string &input, bool silent)
 	int num, result;
 	ifstream file;
 	file.exceptions(std::ifstream::failbit);
+	std::map<string, string> mydict =
+	{
+		{"name", "dictionary"}
+	};
 	try
 	{
 		num = stoi(input);
@@ -63,9 +68,21 @@ int	garden_operations(const string &input, bool silent)
 			cerr << "Caught FileNotFoundError: No such file '" << input << "'" << endl;
 			return 1;
 		}
+		try
+		{
+			if (silent == false)
+			{
+
+			}
+
+		}
+		catch(const out_of_range &e)
+		{
+			cout << "Testing KeyError...\n";
+			cerr << "Caught KeyError: " << input << endl;
+			return 1;
+		}
 		
-	
-	
 	return 0;
 }
 
@@ -74,6 +91,12 @@ void	test_error_types(void)
 	garden_operations("abc", false);
 	// garden_operations("15", false);
 	garden_operations("missing.txt", false);
+	garden_operations("missing_key", false);
+	cout << "Testing multiple errors together...\n";
+	garden_operations("s", true);
+	garden_operations("8", true);
+	garden_operations("orion", true);
+	garden_operations("missin", true);
 }
 
 int	main(void)
