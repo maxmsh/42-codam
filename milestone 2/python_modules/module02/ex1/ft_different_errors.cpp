@@ -1,34 +1,9 @@
 #include <iostream>
 #include <string>
+#include <fstream>
+#include <filesystem>
 #include <stdexcept>
 using namespace std;
-
-class ZeroDivisionError : public std::exception
-{
-	public:
-	const char* what() const noexcept override
-	{
-		return "\nCaught ZeroDivisionError: ";
-	}
-};
-
-class FileNotFoundError : public std::exception
-{
-	public:
-	const char* what() const noexcept override
-	{
-		return "\nCaught FileNotFoundError: ";
-	}
-};
-
-class KeyError : public std::exception
-{
-	public:
-	const char* what() const noexcept override
-	{
-		return "\nCaught KeyError: ";
-	}
-};
 
 class SignalException : public std::exception
 {
@@ -42,39 +17,53 @@ class SignalException : public std::exception
 int	garden_operations(const string &input, bool silent)
 {
 	int num, result;
-	double numb;
+	ifstream file;
+	file.exceptions(std::ifstream::failbit);
 	try
 	{
-		if (silent == false)
-		{
-			cout << "\nTesting ValueError...\n";
-			num = stoi(input);
-		}
+		num = stoi(input);
 	}
 	catch(const invalid_argument &e)
 	{
-		if (silent == false)
-			cerr <<"Caught ValueError: invalid literal for int()" << endl;
-		else
-			throw SignalException();
-	}
-	try
-	{
-		if (silent == false)
+		if (silent == false && input.rfind('.') == string::npos)
 		{
-			cout << "\nTesting ZeroDivisionError..." << endl;
-			// numb = (num * 1.0);
-			// result = (numb / 0);
-			// return result;
+			cout << "\nTesting ValueError...\n";
+			cerr << "Caught ValueError: invalid literal for int()" << endl;
+			return 1;
 		}
-	}
-	catch(const runtime_error &e)
-	{
-		if (silent == false)
-			throw ZeroDivisionError();
-		else
+		else if (silent == true)
 			throw SignalException();
 	}
+	// try
+	// {
+	// 	if (silent == false)
+	// 	{
+	// 		result = num / 0;
+	// 	}
+	// }
+	// catch(const runtime_error &e)
+	// {
+	// 	if (silent == false)
+	// 	{
+	// 		cout << "\nTesting ZeroDivisionError...\n";
+	// 		cerr << "Caught ZeroDivisionError: division by zero" << endl;
+	// 		return 1;
+	// 	}
+	// 	else if (silent == true)
+	// 		throw SignalException();
+	// }
+		try
+		{
+			if (silent == false && input.rfind('.'))
+				file.open(input);
+		}
+		catch(const ios_base::failure &e)
+		{
+			cout << "\nTesting FileNotFoundError...\n";
+			cerr << "Caught FileNotFoundError: No such file '" << input << "'" << endl;
+			return 1;
+		}
+		
 	
 	
 	return 0;
@@ -83,7 +72,8 @@ int	garden_operations(const string &input, bool silent)
 void	test_error_types(void)
 {
 	garden_operations("abc", false);
-	garden_operations("15", false);
+	// garden_operations("15", false);
+	garden_operations("missing.txt", false);
 }
 
 int	main(void)
