@@ -43,7 +43,7 @@ int	garden_operations(const string &input, bool silent)
 	// {
 	// 	if (silent == false)
 	// 	{
-	// 		result = num / 0;
+	// 		"0 / 0";
 	// 	}
 	// }
 	// catch(const runtime_error &e)
