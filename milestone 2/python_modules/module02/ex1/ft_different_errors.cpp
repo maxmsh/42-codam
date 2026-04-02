@@ -70,32 +70,36 @@ int	garden_operations(const string &input, bool silent)
 
 		if (!silent)
 		{
-			cerr << "\nTesting " << e.name << "Error...\nCaught " << e.name << "Error: " << e.what() << endl;
+			cerr << "\nTesting " << e.name << "Error...\nCaught " << e.name << "Error: " << e.desc << endl;
 		}
 		else if (silent)
 		{
-			SignalException e("SignalError","Caught an error, but program continues!");
+			SignalException e("SilentError","Caught an error, but program continues!");
 
 			cerr << "\n" << e.desc;
 			return 1;
 		}
 	}
-	// try
-	// {
-	// 	if (silent == false)
-	// 	{
-	// 		"0 / 0";
-	// 	}
-	// }
-	// catch(const runtime_error &e)
-	// {
-	// 	if (silent == false)
-	// 	{
-	// 		cout << "\nTesting ZeroDivisionError...\n";
-	// 		cerr << "Caught ZeroDivisionError: division by zero" << endl;
-	// 		return 1;
-	// 	}
-	// }
+	try
+	{
+		result = (num / 10);
+		if (result == 0)
+			throw overflow_error("division by zero");
+	}
+	catch(const overflow_error &)
+	{
+		ZeroDivisionError e("division by zero");
+		if (!silent)
+		{
+			cerr << "\nTesting " << e.name << "Error...\nCaught " << e.name << "Error: " << e.desc << endl;
+		}
+		else if (silent)
+		{
+			SignalException e("SilentError", "Caught an error, but program still continues!");
+			cerr << e.desc << "\n";
+			return 1;
+		}
+	}
 		// try
 		// {
 		// 	if (silent == false && input.rfind('.'))
@@ -125,12 +129,12 @@ int	garden_operations(const string &input, bool silent)
 
 void	test_error_types(void)
 {
-	// garden_operations("abc", false);
-	// garden_operations("15", false);
+	garden_operations("abc", false);
+	garden_operations("0", false);
 // 	garden_operations("missing.txt", false);
 // 	garden_operations("missing_key", false);
 // 	cout << "Testing multiple errors together...\n";
-	garden_operations("s", true);
+	// garden_operations("s", true);
 // 	garden_operations("8", true);
 // 	garden_operations("orion", true);
 // 	garden_operations("missin", true);
