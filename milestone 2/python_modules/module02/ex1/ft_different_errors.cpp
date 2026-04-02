@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cstring>
 #include <fstream>
 #include <filesystem>
 #include <stdexcept>
@@ -66,6 +67,7 @@ class KeyError : public SignalException
 int	garden_operations(const string &input, bool silent)
 {
 	int num, result;
+	bool parsed;
 	ifstream file;
 	file.exceptions(std::ifstream::failbit);
 	std::map<string, string> mydict =
@@ -74,7 +76,12 @@ int	garden_operations(const string &input, bool silent)
 	};
 	try
 	{
-		num = stoi(input);
+		if (input.find('.') == string::npos)
+		{
+			num = stoi(input);
+			parsed = true;
+			return 1;
+		}
 	}
 	catch(const invalid_argument &)
 	{
@@ -83,12 +90,12 @@ int	garden_operations(const string &input, bool silent)
 		if (!silent)
 		{
 			cerr << "\nTesting " << e.name << "Error...\nCaught " << e.name << "Error: " << e.desc << endl;
+			return 1;
 		}
 		else if (silent)
 		{
 			SignalException e("SilentError","Caught an error, but program continues!");
-
-			cerr << "\n" << e.desc;
+			cerr << e.desc << "\n";
 			return 1;
 		}
 	}
@@ -96,7 +103,7 @@ int	garden_operations(const string &input, bool silent)
 	{
 		result = (num / 10);
 		if (result == 0)
-			throw overflow_error("division by zero");
+			throw overflow_error("");
 	}
 	catch(const overflow_error &)
 	{
@@ -104,37 +111,58 @@ int	garden_operations(const string &input, bool silent)
 		if (!silent)
 		{
 			cerr << "\nTesting " << e.name << "Error...\nCaught " << e.name << "Error: " << e.desc << endl;
+			return 1;
 		}
 		else if (silent)
 		{
-			SignalException e("SilentError", "Caught an error, but program still continues!");
+			SignalException e("SilentError", "Caught an error, but program continues!");
 			cerr << e.desc << "\n";
 			return 1;
 		}
 	}
-		// try
-		// {
-		// 	if (silent == false && input.rfind('.'))
-		// 		file.open(input);
-		// }
-		// catch(const ios_base::failure &e)
-		// {
-		// 	cerr << "\nTesting FileNotFoundError...\n";
-		// 	cerr << "Caught FileNotFoundError: No such file '" << input << "'" << endl;
-		// }
-		// try
-		// {
-		// 	if (silent == false)
-		// 	{
+	try
+	{
+		if (input.find('.') != string::npos)
+		{
+			file.open(input);
+		}
+	}
+	catch(const ios_base::failure &)
+	{
+		FileNotFoundError e("No such file ");
 
-		// 	}
+		if (!silent)
+		{
+			cerr << "\nTesting " << e.name << "Error...\nCaught " << e.name << "Error: " << e.desc << "'" << input << "'" << endl;
+			return 1;
+		}
+		else if (silent)
+		{
+			SignalException e("SilentError", "Caught an error, but program continues!");
+			cerr << e.desc << "\n";
+			return 1;
+		}
+	}
+	try
+	{
+		
+	}
+		catch(const out_of_range &)
+		{
+			KeyError e("");
 
-		// }
-		// catch(const out_of_range &e)
-		// {
-		// 	cerr << "Testing KeyError...\n";
-		// 	cerr << "Caught KeyError: " << input << endl;
-		// }
+			if (!silent)
+			{
+				cerr << "\nTesting " << e.name << "Error...\nCaught " << e.name << "Error: " << input << endl;
+				return 1;
+			}
+			else if (silent)
+			{
+				SignalException e("SilentError", "Caught an error, but program continues!");
+				cerr << e.desc << "\n";
+				return 1;
+			}
+		}
 		
 	return 0;
 }
@@ -143,10 +171,10 @@ void	test_error_types(void)
 {
 	garden_operations("abc", false);
 	garden_operations("0", false);
-// 	garden_operations("missing.txt", false);
+	garden_operations("missing.txt", false);
 // 	garden_operations("missing_key", false);
 // 	cout << "Testing multiple errors together...\n";
-	// garden_operations("s", true);
+// 	garden_operations("s", true);
 // 	garden_operations("8", true);
 // 	garden_operations("orion", true);
 // 	garden_operations("missin", true);
