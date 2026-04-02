@@ -19,8 +19,6 @@ class ValueError : public std::exception
 
 int check_plant_health(string plant_name, int water_level, int sunlight_hours)
 {
-    bool healthy = false;
-
     try
     {
         if (plant_name.empty())
@@ -31,6 +29,7 @@ int check_plant_health(string plant_name, int water_level, int sunlight_hours)
         std::cerr << "Error: " << e.what() << '\n';
         return 1;
     }
+
     try
     {
         if (water_level <= 1)
@@ -61,8 +60,6 @@ int check_plant_health(string plant_name, int water_level, int sunlight_hours)
             std::cerr << "Error: Sunlight hours " << sunlight_hours << " is too high (max 12)" << '\n';
     }
     
-    
-
     if ((!plant_name.empty()) && (water_level >= 1 && water_level <= 10) && (sunlight_hours >= 2 && sunlight_hours <= 12))
     {
         cout << "Plant '" << plant_name << "' is healthy!" << endl; 
