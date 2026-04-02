@@ -8,7 +8,7 @@ using namespace std;
 
 // I am initializing and creating a couple of error classes here
 // to be called later in the program. Each will have their own name
-// and descriptive message of what exactly went wrong. 
+// and descriptive message of what exactly went wrong.
 
 class SignalException : public std::exception
 {
@@ -72,9 +72,12 @@ int	garden_operations(const string &input, bool silent)
 		{
 			cerr << "\nTesting " << e.name << "Error...\nCaught " << e.name << "Error: " << e.what() << endl;
 		}
-		else
+		else if (silent)
 		{
-			throw;
+			SignalException e("SignalError","Caught an error, but program continues!");
+
+			cerr << "\n" << e.desc;
+			return 1;
 		}
 	}
 	// try
@@ -92,8 +95,6 @@ int	garden_operations(const string &input, bool silent)
 	// 		cerr << "Caught ZeroDivisionError: division by zero" << endl;
 	// 		return 1;
 	// 	}
-	// 	else if (silent == true)
-	// 		throw SignalException();
 	// }
 		// try
 		// {
@@ -124,12 +125,12 @@ int	garden_operations(const string &input, bool silent)
 
 void	test_error_types(void)
 {
-	garden_operations("abc", false);
+	// garden_operations("abc", false);
 	// garden_operations("15", false);
 // 	garden_operations("missing.txt", false);
 // 	garden_operations("missing_key", false);
 // 	cout << "Testing multiple errors together...\n";
-// 	garden_operations("s", true);
+	garden_operations("s", true);
 // 	garden_operations("8", true);
 // 	garden_operations("orion", true);
 // 	garden_operations("missin", true);
@@ -138,7 +139,7 @@ void	test_error_types(void)
 int	main(void)
 {
 	cout << "=== Garden Error Types Demo ==="
-				<< "\n\n";
+				<< "\n";
 	test_error_types();
 	cout << "\nAll error types tested succesfully!" << endl;
 }
