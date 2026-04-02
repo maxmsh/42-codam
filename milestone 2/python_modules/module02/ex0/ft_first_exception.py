@@ -1,10 +1,7 @@
 def check_temperature(temp_str) -> int:
     print(f"\nTesting temperature: {temp_str}")
     try:
-        if not isinstance(temp_str, str):
-            typecasted = int(temp_str)
-        else:
-            typecasted = int(temp_str)
+        typecasted = int(temp_str)
 
         if typecasted > 40:
             raise ValueError("hot")

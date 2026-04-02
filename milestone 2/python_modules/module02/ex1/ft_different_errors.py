@@ -1,10 +1,9 @@
 class SignalException(Exception):
     pass
 
-
 def garden_operations(value: str, silent: bool = False) -> None:
     try:
-        if isinstance(value, str) and "." not in value and "key" not in value:
+        if value * 0 == "" and "." not in value and "key" not in value:
             if not silent:
                 print("\nTesting ValueError...")
             int(value)
@@ -13,10 +12,10 @@ def garden_operations(value: str, silent: bool = False) -> None:
             print(f"Caught {type(e).__name__}: {e}")
         else:
             raise SignalException
-            return
+        return
 
     try:
-        if isinstance(value, int):
+        if value * 0 == 0:
             if not silent:
                 print("\nTesting ZeroDivisionError...")
             num = int(value)
@@ -26,33 +25,32 @@ def garden_operations(value: str, silent: bool = False) -> None:
             print(f"Caught {type(e).__name__}: {e}")
         else:
             raise SignalException
-            return
+        return
 
     try:
-        if isinstance(value, str) and "." in value:
+        if value * 0 == "" and "." in value:
             if not silent:
                 print("\nTesting FileNotFoundError...")
-            open(str(value), "r")
+            open(value, "r")
     except FileNotFoundError as e:
         if not silent:
             print(f"Caught {type(e).__name__}: {e}")
         else:
             raise SignalException
-            return
+        return
 
     try:
-        if isinstance(value, str) and "key" in value:
+        if value * 0 == "" and "key" in value:
             if not silent:
                 print("\nTesting KeyError...")
             mydict = {"name": "dictionary"}
-            print(mydict[str(value)])
+            print(mydict[value])
     except KeyError as e:
         if not silent:
             print(f"Caught {type(e).__name__}: {e}")
         else:
             raise SignalException
-            return
-
+        return
 
 def test_error_types():
     garden_operations("abc")
@@ -67,7 +65,6 @@ def test_error_types():
         garden_operations("missin", silent=True)
     except (SignalException):
         print("Caught an error, but program still continues!")
-
 
 if __name__ == "__main__":
     print("=== Garden Error Types Demo ===")
