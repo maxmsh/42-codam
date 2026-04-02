@@ -17,7 +17,8 @@ class GardenError : public std::exception
     }
 };
 
-// Here I am creating a class called GardenError that's going to be functioning
+// Here I am creating a class called GardenError that inherits its base traits from
+// the standardized exception class. For our intents and purposes, it's  going to serve
 // as a template for both the PlantClass and WaterClass that follow after this one.
 // It contains a string for its name to differentiate between specific error types
 // and also a description that will tell you what went wrong. 
