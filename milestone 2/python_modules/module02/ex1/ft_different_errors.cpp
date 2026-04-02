@@ -76,7 +76,7 @@ int	garden_operations(const string &input, bool silent)
 	};
 	try
 	{
-		if (input.find('.') == string::npos)
+		if (input.find('.') == string::npos && input.find('_') == string::npos)
 		{
 			num = stoi(input);
 			parsed = true;
@@ -147,7 +147,10 @@ int	garden_operations(const string &input, bool silent)
 	}
 	try
 	{
-		
+		if (!parsed && input.find('.') == string::npos)
+		{
+			mydict.at(input);
+		}	
 	}
 		catch(const out_of_range &)
 		{
@@ -155,7 +158,7 @@ int	garden_operations(const string &input, bool silent)
 
 			if (!silent)
 			{
-				cerr << "\nTesting " << e.name << "Error...\nCaught " << e.name << "Error: " << input << endl;
+				cerr << "\nTesting " << e.name << "Error...\nCaught " << e.name << "Error: '" << input << "'" << endl;
 				return 1;
 			}
 			else if (silent)
@@ -174,12 +177,9 @@ void	test_error_types(void)
 	garden_operations("abc", false);
 	garden_operations("0", false);
 	garden_operations("missing.txt", false);
-// 	garden_operations("missing_key", false);
-// 	cout << "Testing multiple errors together...\n";
-// 	garden_operations("s", true);
-// 	garden_operations("8", true);
-// 	garden_operations("orion", true);
-// 	garden_operations("missin", true);
+	garden_operations("missing_key", false);
+	cout << "\nTesting multiple errors together...\n";
+	garden_operations("s", true);
 }
 
 int	main(void)
