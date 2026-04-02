@@ -67,7 +67,7 @@ class KeyError : public SignalException
 int	garden_operations(const string &input, bool silent)
 {
 	int num, result;
-	bool parsed;
+	bool parsed = false;
 	ifstream file;
 	file.exceptions(std::ifstream::failbit);
 	std::map<string, string> mydict =
@@ -80,7 +80,6 @@ int	garden_operations(const string &input, bool silent)
 		{
 			num = stoi(input);
 			parsed = true;
-			return 1;
 		}
 	}
 	catch(const invalid_argument &)
@@ -101,9 +100,12 @@ int	garden_operations(const string &input, bool silent)
 	}
 	try
 	{
-		result = (num / 10);
-		if (result == 0)
-			throw overflow_error("");
+		if (parsed)
+			{
+				result = (num / 10);
+					if (result == 0)
+						throw overflow_error("");
+			}
 	}
 	catch(const overflow_error &)
 	{
@@ -122,7 +124,7 @@ int	garden_operations(const string &input, bool silent)
 	}
 	try
 	{
-		if (input.find('.') != string::npos)
+		if (!parsed && input.find('.') != string::npos)
 		{
 			file.open(input);
 		}
