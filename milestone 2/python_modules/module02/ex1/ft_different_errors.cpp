@@ -10,6 +10,18 @@ using namespace std;
 // to be called later in the program. Each will have their own name
 // and descriptive message of what exactly went wrong.
 
+// I made the implementation of this program perhaps a little more
+// elaborate than what was requested by 42. For example, I use a boolean
+// value called 'silent' that will allow me to toggle the error output
+// of every single error on or off. When set to silent, its specific error output
+// will not print.
+
+// SignalException was not specified as an error that had to be handled in
+// the subject. However, I decided to make it as a sort of signal that will
+// simply let you know an error has been found when the errors within the 
+// program have been set to silent. This turned out to be useful when
+// testing multiple errors together at the same time.
+
 class SignalException : public std::exception
 {
 	public:
