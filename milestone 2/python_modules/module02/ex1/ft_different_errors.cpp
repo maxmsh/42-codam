@@ -1,191 +1,157 @@
 #include <iostream>
 #include <string>
-#include <cstring>
 #include <fstream>
-#include <filesystem>
-#include <stdexcept>
 #include <map>
 using namespace std;
 
-// I am initializing and creating a couple of error classes here
-// to be called later in the program. Each will have their own name
-// and descriptive message of what exactly went wrong.
-
-// I made the implementation of this program perhaps a little more
-// elaborate than what was requested by 42. For example, I use a boolean
-// value called 'silent' that will allow me to toggle the error output
-// of every single error on or off. When set to silent, its specific error output
-// will not print.
-
-// SignalException was not specified as an error that had to be handled in
-// the subject. However, I decided to make it as a sort of signal that will
-// simply let you know an error has been found when the errors within the 
-// program have been set to silent. This turned out to be useful when
-// testing multiple errors together at the same time.
-
-class SignalException : public std::exception
+class GardenError : public std::exception
 {
-	public:
-	string name, desc;
+    public:
+    string name, desc;
 
-	SignalException(const string &name, const string &desc) :
-	name(name), desc(desc) {}
-	const char* what() const noexcept override
-	{
-		return desc.c_str();
-	}
+    GardenError(const string &name, const string &desc)
+    : name(name), desc(desc) {}
+
+    const char* what() const noexcept override
+    {
+        return desc.c_str();
+    }
 };
 
-class ValueError : public SignalException
+class ValueError : public GardenError
 {
-	public:
-	ValueError(const string &desc)
-	: SignalException("Value", desc) {}
+    public:
+    ValueError(const string &name, const string &desc)
+    : GardenError(name, desc) {}
 };
 
-class ZeroDivisionError : public SignalException
+class ZeroDivisionError : public GardenError
 {
-	public:
-	ZeroDivisionError(const string &desc)
-	: SignalException("ZeroDivision", desc) {}
+    public:
+    ZeroDivisionError(const string &name, const string &desc)
+    : GardenError(name, desc) {}
 };
 
-class FileNotFoundError : public SignalException
+class FileNotFoundError : public GardenError
 {
-	public:
-	FileNotFoundError(const string &desc)
-	: SignalException("FileNotFound", desc) {}
+    public:
+    FileNotFoundError(const string &name, const string &desc)
+    : GardenError(name, desc) {}
 };
 
-class KeyError : public SignalException
+class KeyError : public GardenError
 {
-	public:
-	KeyError(const string &desc)
-	: SignalException("Key", desc) {}
+    public:
+    KeyError(const string &name, const string &desc)
+    : GardenError(name, desc) {}
 };
 
-int	garden_operations(const string &input, bool silent)
+// Here I initialize a class with two variables that can overwrite
+// the standard message output of an error in e.what(). 
+
+int garden_operations(string input, int divisor, string filename, string key, bool silent)
 {
-	int num, result;
-	bool parsed = false;
-	ifstream file;
-	file.exceptions(std::ifstream::failbit);
-	std::map<string, string> mydict =
-	{
-		{"name", "dictionary"}
-	};
-	try
-	{
-		if (input.find('.') == string::npos && input.find('_') == string::npos)
-		{
-			num = stoi(input);
-			parsed = true;
-		}
-	}
-	catch(const invalid_argument &)
-	{
-		ValueError e("invalid literal for int()");
+    int result, errors;
+    errors = 0;
 
-		if (!silent)
-		{
-			cerr << "\nTesting " << e.name << "Error...\nCaught " << e.name << "Error: " << e.desc << endl;
-			return 1;
-		}
-		else if (silent)
-		{
-			SignalException e("SilentError","Caught an error, but program continues!");
-			cerr << e.desc << "\n";
-			return 1;
-		}
-	}
-	try
-	{
-		if (parsed)
-			{
-				result = (num / 10);
-					if (result == 0)
-						throw overflow_error("");
-			}
-	}
-	catch(const overflow_error &)
-	{
-		ZeroDivisionError e("division by zero");
-		if (!silent)
-		{
-			cerr << "\nTesting " << e.name << "Error...\nCaught " << e.name << "Error: " << e.desc << endl;
-			return 1;
-		}
-		else if (silent)
-		{
-			SignalException e("SilentError", "Caught an error, but program continues!");
-			cerr << e.desc << "\n";
-			return 1;
-		}
-	}
-	try
-	{
-		if (!parsed && input.find('.') != string::npos)
-		{
-			file.open(input);
-		}
-	}
-	catch(const ios_base::failure &)
-	{
-		FileNotFoundError e("No such file ");
+    map<string, int> garden = {
+        {"roses", 3},
+        {"tulips", 7},
+        {"sunflowers", 2}
+    };
 
-		if (!silent)
-		{
-			cerr << "\nTesting " << e.name << "Error...\nCaught " << e.name << "Error: " << e.desc << "'" << input << "'" << endl;
-			return 1;
-		}
-		else if (silent)
-		{
-			SignalException e("SilentError", "Caught an error, but program continues!");
-			cerr << e.desc << "\n";
-			return 1;
-		}
-	}
-	try
-	{
-		if (!parsed && input.find('.') == string::npos)
-		{
-			mydict.at(input);
-		}	
-	}
-		catch(const out_of_range &)
-		{
-			KeyError e("");
+    try
+    {
+        int num = stoi(input);
+    }
+    catch(const invalid_argument &)
+    {
+        ValueError e("ValueError", "invalid literal for int()");
 
-			if (!silent)
-			{
-				cerr << "\nTesting " << e.name << "Error...\nCaught " << e.name << "Error: '" << input << "'" << endl;
-				return 1;
-			}
-			else if (silent)
-			{
-				SignalException e("SilentError", "Caught an error, but program continues!");
-				cerr << e.desc << "\n";
-				return 1;
-			}
-		}
-		
-	return 0;
+        errors++;
+        if (silent == false)
+        {
+            cerr << "Caught " << e.name << ": " << e.what() << '\n';
+        }
+    }
+    
+    try
+    {
+        result = (divisor / 10);
+
+        if (divisor == 0)
+            throw overflow_error("");
+    }
+    catch(const overflow_error &)
+    {
+        ZeroDivisionError e("ZeroDivisionError", "division by zero");
+
+        errors++;
+        if (silent == false)
+        {
+            cerr << "Caught " << e.name << ": " << e.what() << '\n';
+        }
+    }
+
+    try
+    {
+        ifstream file(filename);
+        if (!file.is_open())
+            throw runtime_error("");
+    }
+    catch(const runtime_error &)
+    {
+        FileNotFoundError e("FileNotFoundError", "No such file ");
+
+        errors++;
+        if (silent == false)
+        {
+            cerr << "Caught " << e.name << ": " << e.what() << "'" << filename << "'" << '\n';
+        }
+    }
+    
+    try
+    {
+        garden.at(key);
+    }
+    catch(const out_of_range &)
+    {
+        KeyError e("KeyError", "");
+
+        errors++;
+        if (silent == false)
+        {
+            cerr << "Caught "  << e.name << ": '" << key << "'" << '\n';
+        }
+    }
+    
+    
+    if (silent == true && errors > 0)
+    {
+        cout << "Caught an error, but program continues!\n";
+    }
+
+    return 0;
 }
 
-void	test_error_types(void)
+void test_error_types()
 {
-	garden_operations("abc", false);
-	garden_operations("0", false);
-	garden_operations("missing.txt", false);
-	garden_operations("missing_key", false);
-	cout << "\nTesting multiple errors together...\n";
-	garden_operations("s", true);
+    cout << "\nTesting ValueError...\n";
+    garden_operations("abc", 2, "ft_different_errors.cpp", "roses",  false);
+    cout << "\nTesting ZeroDivisionError...\n";
+    garden_operations("67", 0, "ft_different_errors.cpp", "roses", false);
+    cout << "\nTesting FileNotFoundError...\n";
+    garden_operations("15", 9, "missing.txt", "roses", false);
+    cout << "\nTesting KeyError...\n";
+    garden_operations("3", 11, "ft_different_errors.cpp", "missing_plant", false);
+
+    cout << "\nTesting multiple errors...\n";
+    garden_operations("abc", 0, "missing.txt", "missing_plant", true);
 }
 
-int	main(void)
+int main(void)
 {
-	cout << "=== Garden Error Types Demo ==="
-				<< "\n";
-	test_error_types();
-	cout << "\nAll error types tested succesfully!" << endl;
+    cout << "=== Garden Error Types Demo ===\n";
+    test_error_types();
+    cout << "\nAll error types tested successfully!" << endl;
 }
