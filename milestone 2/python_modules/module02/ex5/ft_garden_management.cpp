@@ -34,13 +34,19 @@ class WaterError : public GardenError
     : GardenError(message) {}
 };
 
+struct Plant
+{
+    string name;
+    int water, sun;
+};
+
 class GardenManager
 {
     public:
 
-    vector<string> plants = {""};
+    vector<Plant> plants;
 
-    void add_plant(string name)
+    void add_plant(string name, int water, int sun)
     {
         try
         {
@@ -48,7 +54,7 @@ class GardenManager
                 throw PlantError("empty");
             else
             {
-                plants.push_back(name);
+                plants.push_back({name, water, sun});
                 cout << "Added " << name << " successfully!" << endl;
             }
         }
@@ -62,11 +68,12 @@ class GardenManager
     void water_plants(void)
     {
         cout << "\nOpening watering system\n";
-        for (const string &plant : plants)
+        for (const Plant &plant : plants)
         {
-            if (!plant.empty())
-                cout << "Watering " << plant << "- success\n";
+            if (!plants.empty())
+                cout << "Watering " << plant.name << " - success\n";
         }
+        cout << "Closing watering system (cleanup)\n";
     }
 };
 
@@ -74,9 +81,9 @@ int check_garden_management()
 {
     GardenManager manager;
 
-    manager.add_plant("tomato");
-    manager.add_plant("lettuce");
-    manager.add_plant("");
+    manager.add_plant("tomato", 1, 3);
+    manager.add_plant("lettuce", 2, 15);
+    manager.add_plant("", 0, 0);
 
     manager.water_plants();
 
