@@ -43,6 +43,7 @@ struct Plant
 class GardenManager
 {
     public:
+    int errors = 0;
 
     vector<Plant> plants;
 
@@ -60,6 +61,7 @@ class GardenManager
         }
         catch(const PlantError&e)
         {
+            errors++;
             if (strcmp(e.what(), "empty") == 0)
                 cerr << "Plant name cannot be empty!" << '\n';
         }
@@ -92,6 +94,7 @@ class GardenManager
             }
             catch(const WaterError &e)
             {
+                errors++;
                 if (strcmp(e.what(), "low_water") == 0)
                     cerr << "Error checking " << plant.name << ": Water level " << plant.water << " is too low (min 1)\n";
                 else if (strcmp(e.what(), "high_water") == 0)
@@ -106,6 +109,7 @@ class GardenManager
             }
             catch(const PlantError& e)
             {
+                errors++;
                 if (strcmp(e.what(), "low_plant") == 0)
                     cerr << "Error checking " << plant.name << ": Sunlight hours " << plant.sun << " is too low (min 2)\n";
                 else if (strcmp(e.what(), "high_plant") == 0)
@@ -113,6 +117,22 @@ class GardenManager
             }
             
         }
+    }
+
+    void testing_error_recovery(void)
+    {
+        cout << "\nTesting error recovery...\n";
+        try
+        {
+            if (errors > 0)
+                throw GardenError("tank");
+        }
+        catch(const GardenError& e)
+        {
+            if (strcmp(e.what(), "tank") == 0)
+                cerr << "Caught GardenError: Not enough water in tank\n";
+        }
+        cout << "System recovered and continuing...\n";
     }
 };
 
@@ -127,6 +147,7 @@ int check_garden_management()
     manager.water_plants();
 
     manager.check_plant_health();
+    manager.testing_error_recovery();
 
     return 0;
 }
