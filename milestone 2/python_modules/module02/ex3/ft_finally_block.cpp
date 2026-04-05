@@ -24,21 +24,65 @@ struct Plant
     int water, sun;
 };
 
-void test_watering_system(int errors)
+void test_watering_system(void)
 {
-    cout << "=== Garden Watering System ===\n\n";
+    int errors = 0;
 
     vector<Plant> plants = {
-        {"tomato", 4, 6}
+        {"tomato", 4, 6},
+        {"lettuce", 2, 17},
+        {"carrots", 2, 17}
     };
-
+    vector<Plant> error = {
+        {"tomato", 4, 5},
+        {"None", 8, 3}
+    };
     
+    cout << "\nTesting normal watering...\nOpening watering system\n";
+    for (Plant &plant : plants)
+    {
+        try
+        {
+            if ((!plant.name.empty()) && (plant.name != "None"))
+                cout << "Watering " << plant.name << "\n";
+            else
+                throw Error("empty");
+        }
+        catch(const Error &e)
+        {
+            errors++;
+             if (strcmp(e.what(), "empty") == 0)
+                cerr << "Error: cannot water " << plant.name << " - invalid plant!" << '\n';
+        }
+    }
+    cout << "Closing watering system (cleanup)" << endl;
+    if (errors == 0)
+        cout << "Watering completed successfully!\n\n";
+    cout << "\nTesting with error...\nOpening watering system\n";
+    for (Plant &plant : error)
+    {
+        try
+        {
+            if ((!plant.name.empty()) && (plant.name != "None"))
+                cout << "Watering " << plant.name << "\n";
+            else
+                throw Error("empty");
+        }
+        catch(const Error &e)
+        {
+            errors++;
+            if (strcmp(e.what(), "empty") == 0)
+                cerr << "Error: cannot water " << plant.name << " - invalid plant!" << '\n';
+        }
+    }
+    cout << "Closing watering system (cleanup)" << endl;
+    if (errors == 0)
+        cout << "Watering completed successfully!\n";
 }
 
 int main(void)
 {
-    cout << "=== Garden Watering System ===\n";
-    test_watering_system(0);
-    test_watering_system(1);
+    cout << "=== Garden Watering System ===\n\n";
+    test_watering_system();
     cout << "\nCleanup always happens, even with errors!" << endl;
 }
