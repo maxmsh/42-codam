@@ -47,7 +47,7 @@ class KeyError : public GardenError
 };
 
 // I have initialized all errors as individual classes that have the ability to overwrite
-// e.what's output. This is done so that every time an error has been caught
+// e.what's (default error message) output. This is done so that every time an error has been caught
 // successfully, we can print a unique message to the terminal (as required by the subject).
 // All classes ultimately inherit their base traits from their parent of GardenError. 
 
