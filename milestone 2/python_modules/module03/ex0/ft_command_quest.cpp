@@ -4,7 +4,7 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-    string program_name = "ft_command_quest.cpp";
+    string program_name = argv[0];
     int args_received = argc - 1;
     int i = 1;
 
