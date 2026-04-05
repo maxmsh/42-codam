@@ -46,8 +46,10 @@ class KeyError : public GardenError
     : GardenError(name, desc) {}
 };
 
-// Here I initialize a class with two variables that can overwrite
-// the standard message output of an error in e.what(). 
+// I have initialized all errors as individual classes that have the ability to overwrite
+// e.what's output. This is done so that every time an error has been caught
+// successfully, we can print a unique message to the terminal (as required by the subject).
+// All classes ultimately inherit their base traits from their parent of GardenError. 
 
 int garden_operations(string input, int divisor, string filename, string key, bool silent)
 {
@@ -73,6 +75,8 @@ int garden_operations(string input, int divisor, string filename, string key, bo
         {
             cerr << "Caught " << e.name << ": " << e.what() << '\n';
         }
+
+        // This error will print if invalid input ( = not an integer) has been entered as its value.
     }
     
     try
@@ -91,6 +95,10 @@ int garden_operations(string input, int divisor, string filename, string key, bo
         {
             cerr << "Caught " << e.name << ": " << e.what() << '\n';
         }
+
+        // This error will print if the result of its equation will be zero. Since
+        // it will always divide the user's input by ten, the only way to trigger
+        // this error is to enter a zero as a value. 
     }
 
     try
@@ -108,6 +116,8 @@ int garden_operations(string input, int divisor, string filename, string key, bo
         {
             cerr << "Caught " << e.name << ": " << e.what() << "'" << filename << "'" << '\n';
         }
+
+        // This error will print if the filename you have specified cannot be found.
     }
     
     try
@@ -123,6 +133,11 @@ int garden_operations(string input, int divisor, string filename, string key, bo
         {
             cerr << "Caught "  << e.name << ": '" << key << "'" << '\n';
         }
+
+        // This error will print if you're looking for a value that doesn't
+        // exist. 'Garden' was defined as a map at the start of the function,
+        // and if you enter a value that is not in there, this error will be
+        // displayed.
     }
     
     
@@ -133,6 +148,13 @@ int garden_operations(string input, int divisor, string filename, string key, bo
 
     return 0;
 }
+
+// test_error_types is a function that runs through the garden operations
+// one by one first to check its inputs, then checks them all together whilst
+// having the 'silent' boolean set to true to filter out specific error outputs
+// (since I just want it to tell me whether an error has been found or not). This
+// is where 'errors' comes into play: it increments every time an error has been
+// caught.  
 
 void test_error_types()
 {
