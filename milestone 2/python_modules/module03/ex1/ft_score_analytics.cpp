@@ -10,7 +10,7 @@ int main(int argc, char **argv)
     cout << "=== Player Score Analytics ===\n\n";
     try
     {
-        if (argc > 2)
+        if (argc >= 1)
         {
             cout << "Scores processed: [";
             while (argc > i)
