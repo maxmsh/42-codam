@@ -9,8 +9,9 @@ int main(int argc, char **argv)
     string program_name = argv[0];
     int players = argc - 1;
     int sum = 0;
-    int average;
+    float average;
     int i = 1;
+    int max, min, range;
 
     bool err_output = false;
 
@@ -37,10 +38,19 @@ int main(int argc, char **argv)
         }
         else if (!err_output)
         {
+            max = stoi(argv[1]);
+            min = stoi(argv[1]);
             cout << "Scores processed: [";
             i = 1;
             while (i < argc)
             {
+                int val = stoi(argv[i]);
+
+                if (val > max)
+                    max = val;
+                if (val < min)
+                    min = val;
+
                 cout << argv[i];
                 i++;
                 if (i < argc)
@@ -52,6 +62,10 @@ int main(int argc, char **argv)
             cout << "Total score: " << sum << endl;
             average = sum / players;
             cout << "Average score: " << average << endl;
+            cout << "High score: " << max << endl;
+            cout << "Low score: " << min << endl;
+            range = max - min;
+            cout << "Score range: " << range << endl;
         }
     }
     else
