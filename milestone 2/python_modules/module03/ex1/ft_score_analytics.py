@@ -2,10 +2,10 @@ import sys
 
 
 if __name__ == "__main__":
-    program_name = sys.argv[0]
+    program_name: str = sys.argv[0]
 
-    scores = []
-    invalid_found = False
+    scores: list = []
+    invalid_found: bool = False
 
     for x in sys.argv[1:]:
         try:
@@ -19,7 +19,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
 
-    players = len(scores)
+    players: int = len(scores)
 
     if players < 2:
         print(f"No scores provided. Usage: python3 {program_name} <score1> <score2> ...")

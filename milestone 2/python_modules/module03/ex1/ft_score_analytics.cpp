@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <cstring>
 using namespace std;
 
 int main(int argc, char **argv)
@@ -9,7 +8,7 @@ int main(int argc, char **argv)
     string program_name = argv[0];
     int players = argc - 1;
     int sum = 0;
-    float average;
+    int average;
     int i = 1;
     int max, min, range;
 
