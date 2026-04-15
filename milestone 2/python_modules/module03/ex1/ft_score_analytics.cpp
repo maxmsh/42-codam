@@ -1,19 +1,22 @@
 #include <iostream>
 #include <string>
-#include <numeric>
-#include <bits/stdc++.h>
 using namespace std;
 
 int main(int argc, char **argv)
 {
-    int i = 1;
+    string srcfile = __FILE__;
+    string program_name = argv[0];
     int players = argc - 1;
-    int total = 0;
+    int i = 1;
+    int sum = 0;
 
-    cout << "=== Player Score Analytics ===\n";
-    try
-    {        
-        if (players >= 2)
+    bool invalid_found = false;
+
+
+    if (argc > 2)
+    {
+        cout << "=== Player Score Analytics ===\n";
+        try
         {
             cout << "Scores processed: [";
             while (argc > i)
@@ -23,18 +26,20 @@ int main(int argc, char **argv)
                 if (i < argc)
                     cout << ", ";
                 else if (i == argc)
-                    cout << "]";
+                    cout << "]" << '\n';
             }
-            cout << "\nTotal players: " << players;
-            
-            cout << "\nTotal score: " << total << '\n';
+            cout << "Total players: " << players << '\n';
+            cout << "Total score: " << sum << '\n';
         }
-        else
-            cout << "No scores provided. Usage: clang++ " << argv[0] << " <score1> <score2>" << endl;
+        catch(const std::invalid_argument &e)
+        {
+            std::cerr << e.what() << '\n';
+            invalid_found = true;
+        }
+        
     }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-    }
-    
+    else
+        cout << "No scores provided. Usage: clang++ " << srcfile << " && " << program_name << " <score1> <score2> ..." << endl;
+
+    return 0;
 }
