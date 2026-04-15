@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cstring>
 using namespace std;
 
 int main(int argc, char **argv)
@@ -7,39 +8,54 @@ int main(int argc, char **argv)
     string srcfile = __FILE__;
     string program_name = argv[0];
     int players = argc - 1;
-    int i = 1;
     int sum = 0;
+    int average;
+    int i = 1;
 
-    bool invalid_found = false;
-
+    bool err_output = false;
 
     if (argc > 2)
     {
         cout << "=== Player Score Analytics ===\n";
-        try
+        while (i < argc)
+        {
+            try
+            {
+                sum += stoi(argv[i]);
+            }
+            catch(const std::exception &e)
+            {
+                err_output = true;
+                std::cerr << "Invalid parameter: '" << argv[i] << "'" << '\n';
+            }
+            i++;
+        }
+        if (err_output)
+        {
+            cout << "No scores provided. Usage: clang++ " << srcfile << " && " << program_name << " <score1> <score2> ..." << endl;
+            return 1;
+        }
+        else if (!err_output)
         {
             cout << "Scores processed: [";
-            while (argc > i)
+            i = 1;
+            while (i < argc)
             {
                 cout << argv[i];
                 i++;
                 if (i < argc)
                     cout << ", ";
                 else if (i == argc)
-                    cout << "]" << '\n';
+                    cout << "]" << endl;
             }
-            cout << "Total players: " << players << '\n';
-            cout << "Total score: " << sum << '\n';
+            cout << "Total players: " << players << endl;
+            cout << "Total score: " << sum << endl;
+            average = sum / players;
+            cout << "Average score: " << average << endl;
         }
-        catch(const std::invalid_argument &e)
-        {
-            std::cerr << e.what() << '\n';
-            invalid_found = true;
-        }
-        
     }
     else
         cout << "No scores provided. Usage: clang++ " << srcfile << " && " << program_name << " <score1> <score2> ..." << endl;
-
+    
     return 0;
 }
