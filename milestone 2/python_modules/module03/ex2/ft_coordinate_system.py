@@ -14,15 +14,15 @@ def get_player_pos():
         except ValueError:
             print("Invalid syntax")
             continue
-    return distance_rounded  # fix 1
+    return distance_rounded
 
 if __name__ == "__main__":
     print("=== Game Coordinate System ===")
     print("Get a first set of coordinates")
-    distance_rounded = get_player_pos()  # fix 1
+    distance_rounded = get_player_pos()
     print("\nGet a second set of coordinates")
     while True:
-        raw = input("Enter new coordinates as floats in format 'x,y,z': ")  # fix 2
+        raw = input("Enter new coordinates as floats in format 'x,y,z': ")
         try:
             x, y, z = map(float, raw.split(','))
             distance_to_center_second = math.sqrt((x) **2 + (y) **2 + (z) **2)

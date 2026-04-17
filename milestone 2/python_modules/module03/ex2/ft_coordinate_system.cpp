@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
-#include <cstring>
+#include <sstream>
+#include <vector>
 #include <limits>
 using namespace std;
 
@@ -12,9 +13,24 @@ int get_player_pos()
         cout << "Enter new coordinates as floats in format 'x,y,z': ";
         try
         {
-            string input = "";
+            string input;
             cin >> input;
-            stof(input);
+
+            stringstream ss(input);
+            string token;
+            vector<float> coords;
+            
+            while (getline(ss, token, ','))
+            {
+                coords.push_back(stof(token));
+            }
+
+            float x = coords[0];
+            float y = coords[1];
+            float z = coords[2];
+
+            cout << "You have entered: " << coords[0] << ", " << coords[1] << ", and " << coords[2] << "." << endl;
+            break;
         }
         catch(const invalid_argument &e)
         {
