@@ -10,6 +10,7 @@ using namespace std;
 int get_player_pos()
 {
     bool first = true, second = false;
+    float distance, distance_sec;
 
     cout << "Enter a first set of coordinates\n";
     while (first == true)
@@ -34,8 +35,8 @@ int get_player_pos()
 
             cout << "Got a first tuple: " << coords[0] << ", " << coords[1] << ", " << coords[2]  << endl;
             cout << "It includes: X=" << coords[0] << " Y=" << coords[1] << " Z=" << coords[2] << endl;
-            int distance = sqrt(coords[0] * 2 + coords[1] * 2 + coords[2] * 2);
-            cout << "Distance to center: " << distance << setprecision(4) << endl;
+            distance = sqrt(x*x + y*y + z*z);
+            cout << "Distance to center: " << setprecision(5) << distance << endl;
             first = false;
             second = true;
         }
@@ -67,6 +68,12 @@ int get_player_pos()
                 float x2 = sec_coords[0];
                 float y2 = sec_coords[1];
                 float z2 = sec_coords[2];
+
+                distance_sec = sqrt(x2*x2 + y2*y2 + z2*z2);
+                float calculated = (distance_sec - distance);
+
+                cout << "Distance between the two sets of coordinates: " << setprecision(5) << calculated << endl;
+                break;
             }
             catch(const invalid_argument &e)
             {
