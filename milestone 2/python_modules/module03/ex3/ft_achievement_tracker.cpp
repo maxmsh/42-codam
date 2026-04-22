@@ -30,6 +30,9 @@ vector <Player> gen_player_achievements()
         Player("Dylan", achievements[rand() % max])
     };
 
+    if (achievements.empty())
+        return {};
+
     return players;
 }
 
@@ -39,9 +42,10 @@ int main(void)
 
     vector <Player> players = gen_player_achievements();
 
+    cout << "=== Achievement Tracker System ===\n\n";
     for (Player p: players)
     {
-        cout << "Player " << p.name << " has achievement: " << p.achievement << endl; 
+        cout << "Player " << p.name << ": {" << p.achievement << "}" << endl; 
     }
     return 0;
 }
