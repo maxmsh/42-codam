@@ -1,51 +1,71 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 
-class Player
-{
-    public:
-        string name;
-        string achievement;
+class Player {
+public:
+    string name;
+    vector<string> achievements;
 
-    Player(string n, string a) : name(n), achievement(a) {}
+    Player(string n, vector<string> a) : name(n), achievements(a) {}
 };
 
-
-vector <Player> gen_player_achievements()
+vector<string> get_random_achievements(vector<string>& all_achievements)
 {
-    vector <string> achievements = {
-        "Crafting Genius", "Strategist", "World Savior", "Speed Runner", "Survivor",
-        "Master Explorer", "Treasure Hunter", "Unstoppable", "First Steps",
-        "Collector Supreme", "Untouchable", "Sharp Mind", "Boss Slayer", "Hidden Path Finder"
-    };
+    vector<string> result;
+    vector<string> pool = all_achievements;
 
-    int max = achievements.size();
+    int max = all_achievements.size();
 
-    vector <Player> players = {
-        Player("Alice", achievements[rand() % max]),
-        Player("Bob", achievements[rand() % max]),
-        Player("Charlie", achievements[rand() % max]),
-        Player("Dylan", achievements[rand() % max])
-    };
+    int count = rand() % max;
 
-    if (achievements.empty())
-        return {};
+    for (int i = 0; i < count; i++)
+    {
+        int index = rand() % pool.size();
+        result.push_back(pool[index]);
+        pool.erase(pool.begin() + index);
+    }
 
-    return players;
+    if (result.empty())
+        return {"set()"};
+
+    return result;
 }
 
 int main(void)
 {
     srand(time(0));
 
-    vector <Player> players = gen_player_achievements();
+    cout << "=== Achievement Tracker System ===" << endl;
 
-    cout << "=== Achievement Tracker System ===\n\n";
-    for (Player p: players)
+    vector<string> achievements = {
+        "Crafting Genius", "Strategist", "World Savior", "Speed Runner", "Survivor",
+        "Master Explorer", "Treasure Hunter", "Unstoppable", "First Steps",
+        "Collector Supreme", "Untouchable", "Sharp Mind", "Boss Slayer", "Hidden Path Finder"
+    };
+
+    vector<Player> players = {
+        Player("Alice",   get_random_achievements(achievements)),
+        Player("Bob",     get_random_achievements(achievements)),
+        Player("Charlie", get_random_achievements(achievements)),
+        Player("Dylan",   get_random_achievements(achievements))
+    };
+
+    for (Player p : players)
     {
-        cout << "Player " << p.name << ": {" << p.achievement << "}" << endl; 
+        cout << "\nPlayer " << p.name << ": ";
+        for (int i = 0; i < p.achievements.size(); i++)
+        {
+            cout << "{'" << p.achievements[i] << "'}";
+            if (i < p.achievements.size() - 1)
+                cout << ", ";
+            else if (i == p.achievements.size() - 1)
+                cout << endl;
+        }
     }
+
     return 0;
 }
