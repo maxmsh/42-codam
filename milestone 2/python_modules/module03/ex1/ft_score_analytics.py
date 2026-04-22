@@ -25,11 +25,11 @@ if __name__ == "__main__":
         print(f"No scores provided. Usage: python3 {program_name} <score1> <score2> ...")
         sys.exit(1)
     
-    total = sum(scores)
-    average = total / players
-    maximum = max(scores)
-    minimum = min(scores)
-    score_range = maximum - minimum
+    total: int = sum(scores)
+    average: float = total / players
+    maximum: int = max(scores)
+    minimum: int = min(scores)
+    score_range: int = maximum - minimum
 
     print("=== Player Score Analytics ===")
     print(f"Scores processed: {scores}")
