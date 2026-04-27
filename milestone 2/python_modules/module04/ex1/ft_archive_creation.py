@@ -7,6 +7,10 @@ if __name__ == "__main__":
         try:
             filename: str = sys.argv[1]
 
+            if "/etc/" in filename:
+                raise PermissionError(f"[Errno 13] Permission denied: "
+                                      f"'{filename}'")
+
             print("=== Cyber Archives Recovery & Preservation ===")
             print(f"Accessing file '{filename}'")
 
@@ -41,7 +45,9 @@ if __name__ == "__main__":
                     file.write(new_content)
 
         except FileNotFoundError as e:
-            print(f"Error opening file: '{filename}': {e}")
+            print(f"Error opening file '{filename}': {e}")
+        except PermissionError as e:
+            print(f"Error opening file '{filename}': {e}")
         
     else:
         print("Usage ft_archive_creation.py <file>")
