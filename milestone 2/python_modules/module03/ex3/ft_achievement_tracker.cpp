@@ -67,5 +67,16 @@ int main(void)
         }
     }
 
+    cout << "\nAll distinct achievements: ";
+    for (int j = 0; j < achievements.size(); j++)
+    {
+        cout << "{" << achievements[j] << "}";
+        if (j < achievements.size() - 1)
+            cout << ", ";
+        else if (j == achievements.size())
+            cout << endl;
+    }
+
+    cout << "\nCommon achievements: ";
     return 0;
 }
