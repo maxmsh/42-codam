@@ -17,5 +17,5 @@ if __name__ == "__main__":
                 print(f"File '{filename}' closed.")
         except FileNotFoundError as e:
             print(f"Error opening file '{filename}': {e}")
-    elif argc == 1:
+    else:
         print("Usage: ft_ancient_text.py <file>")
