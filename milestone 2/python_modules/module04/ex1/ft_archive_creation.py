@@ -1,7 +1,7 @@
 import sys
 
 if __name__ == "__main__":
-    argc = len(sys.argv)
+    argc: int = len(sys.argv)
 
     if argc > 1:
         try:
@@ -15,7 +15,7 @@ if __name__ == "__main__":
             print(f"Accessing file '{filename}'")
 
             with open(filename, "r") as file:
-                content = file.read()
+                content: str = file.read()
             
             print("---\n")
             print(content)
@@ -25,18 +25,18 @@ if __name__ == "__main__":
             print("Transform data: ")
             print("---\n")
 
-            lines = content.rstrip("\n").split("\n")
+            lines: list = content.rstrip("\n").split("\n")
 
-            newlines = []
+            newlines: list = []
             for line in lines:
                 newlines.append(line + "#")
             
-            new_content = "\n".join(newlines)
+            new_content: str = "\n".join(newlines)
 
             print(new_content)
             print("\n---")
 
-            save = input("Enter new file name (or empty): ")
+            save: str = input("Enter new file name (or empty): ")
 
             if save == "":
                 print("Not saving data.")
