@@ -15,13 +15,14 @@ if __name__ == "__main__":
                          "\n")
             sys.stdout.write(f"Accessing file '{filename}'\n")
 
-            with open(filename, "r") as file:
-                content = file.read()
+            f = open(filename, "r")
+            content = f.read()
 
             sys.stdout.write("---\n\n")
             sys.stdout.write(content)
             sys.stdout.write("\n\n---")
-            sys.stdout.write(f"\nfile '{filename}' closed.\n")
+            f.close()
+            sys.stdout.write(f"\nFile '{filename}' closed.\n")
 
             sys.stdout.write("\nTransform data: \n")
             sys.stdout.write("---\n\n")
@@ -44,16 +45,21 @@ if __name__ == "__main__":
             if save == "":
                 sys.stdout.write("Not saving data.\n")
             elif "/etc/" in save:
-                raise PermissionError(f"[Errno 13] Permission denied: "
-                                      f"'{save}'")
-                sys.exit(1)
+                raise ValueError(f"[Errno 13] Permission denied: "
+                                      f"'{save}'\n"
+                                      "Data not saved.")
             else:
-                with open(save, "w") as file:
-                    file.write(new_content)
+                f = open(save, "w")
+                sys.stdout.write(f"Saving data to '{save}'\n")
+                f.write(new_content)
+                f.close()
+                sys.stdout.write(f"Data saved in file '{save}'\n")
                 
         except FileNotFoundError as e:
-            sys.stderr.write(f"Error opening file '{filename}': {e}\n")
+            sys.stderr.write(f"[STDERR] Error opening file '{filename}': {e}\n")
         except PermissionError as e:
-            sys.stderr.write(f"Error opening file '{filename}': {e}\n")
+            sys.stderr.write(f"[STDERR] Error opening file '{filename}': {e}\n")
+        except ValueError as e:
+            sys.stderr.write(f"[STDERR] Error opening file '{save}': {e}\n")
     else:
         sys.stdout.write("Usage: ft_stream_management.py <file>\n")

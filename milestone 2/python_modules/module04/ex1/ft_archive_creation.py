@@ -7,22 +7,22 @@ if __name__ == "__main__":
         try:
             filename: str = sys.argv[1]
 
+            print("=== Cyber Archives Recovery & Preservation ===")
+            print(f"Accessing file '{filename}'")
+
             if "/etc/" in filename:
                 raise PermissionError(f"[Errno 13] Permission denied: "
                                       f"'{filename}'")
 
-            print("=== Cyber Archives Recovery & Preservation ===")
-            print(f"Accessing file '{filename}'")
-
-            with open(filename, "r") as file:
-                content: str = file.read()
-            
-            print("---\n")
+            f = open(filename, "r")
+            print("---\n\n")
+            content: str = f.read()
             print(content)
-            print("---")
-            print(f"File '{filename}' closed.\n")
+            print("\n\n---")
+            f.close()
+            print(f"File '{filename}' closed.")
 
-            print("Transform data: ")
+            print("\nTransform data: ")
             print("---\n")
 
             lines: list = content.rstrip("\n").split("\n")
@@ -40,9 +40,15 @@ if __name__ == "__main__":
 
             if save == "":
                 print("Not saving data.")
+            elif "/etc/" in save:
+                raise PermissionError(f"[Errno 13] Permission denied: "
+                                      f"'{save}'")
             else:
-                with open(save, "w") as file:
-                    file.write(new_content)
+                print(f"Saving data to '{save}'")
+                f = open(save, "w")
+                f.write(new_content)
+                f.close()
+                print(f"Data saved in file '{save}'.")
 
         except FileNotFoundError as e:
             print(f"Error opening file '{filename}': {e}")

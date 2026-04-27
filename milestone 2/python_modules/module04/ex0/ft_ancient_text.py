@@ -7,18 +7,21 @@ if __name__ == "__main__":
         try:
             filename: str = sys.argv[1]
 
+            print("=== Cyber Archives Recovery ===")
+            print(f"Accessing file '{filename}'")
+
             if "/etc/" in filename:
                 raise PermissionError(f"[Errno 13] Permission denied: "
                                       f"'{filename}'")
 
-            print("=== Cyber Archives Recovery ===")
-            print(f"Accessing file '{filename}'")
-            with open(filename, "r") as file:
-                print("---\n\n")
-                content = file.read()
-                print(content)
-                print("---")
-                print(f"File '{filename}' closed.")
+            f = open(filename, "r")
+            print("---\n\n")
+            content: str = f.read()
+            print(content)
+            print("---")
+            f.close()
+            print(f"File '{filename}' closed.")
+
         except FileNotFoundError as e:
             print(f"Error opening file '{filename}': {e}")
         except PermissionError as e:
