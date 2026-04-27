@@ -10,10 +10,6 @@ int main(void)
         "Alice", "bob", "Charlie", "dylan", "Emma", "Gregory", "john", "kevin", "Liam"
     };
 
-    vector <string> duplicate = {
-        "Alice", "bob", "Charlie", "dylan", "Emma", "Gregory", "john", "kevin", "Liam"
-    };
-
     std::cout << "Initial list of players: ";
     for (int i = 0; i < players.size(); i++)
     {
@@ -33,13 +29,15 @@ int main(void)
     }
     std::cout << endl;
     std::cout << "\nNew list of capitalized names only: ";
-    for (int i = 0; i < duplicate.size(); i++)
+    vector <string> cap_only;
+    for (int i = 0; i < players.size(); i++)
     {
-        if (duplicate[i][0] >= 65 && duplicate[i][0] <= 90)
-            std::cout << duplicate[i];
-
-        if (i < duplicate.size() - 1)
-            std::cout << ", ";
+        if (players[i][0] >= 65 && players[i][0] <= 90)
+            cap_only.push_back(players[i]);
+    }
+    for (int i = 0; i < cap_only.size(); i++)
+    {
+        
     }
     std::cout << endl;
 }
