@@ -78,5 +78,6 @@ int main(void)
     }
 
     cout << "\nCommon achievements: ";
+    for (int k = 0; k < achievements.size(); k++)
     return 0;
 }
