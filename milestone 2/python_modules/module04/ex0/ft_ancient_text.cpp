@@ -11,8 +11,8 @@ class CustomError : public exception
         int error_num;
     
     public:
-    CustomError(int error_num, const string &message)
-    : full_message("Error opening file: [Errno " + to_string(error_num) + "] " + message),
+    CustomError(const string &filenm, int error_num, const string &message)
+    : full_message("Error opening file '" + filenm + "': [Errno " + to_string(error_num) + "] " + message),
       error_num(error_num) {}
 
     const char* what() const noexcept override
@@ -32,7 +32,10 @@ int main(int argc, char **argv)
             cout << "Accessing file '" << filename << "'" << endl;
 
             if (filename.find("/etc/") != string::npos)
-                throw CustomError(13, " Permission denied: '" + filename + "'");
+                throw CustomError(filename, 13, " Permission denied: '" + filename + "'");
+            
+            ifstream infile;
+
         }
         catch(const CustomError &e)
         {
