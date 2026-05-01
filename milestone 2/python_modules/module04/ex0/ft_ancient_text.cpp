@@ -1,41 +1,42 @@
 #include <iostream>
 #include <cstring>
 #include <string>
+#include <fstream>
 using namespace std;
 
-class PythonError : public exception
+class CustomError : public exception
 {
+    private:
+        string full_message;
+        int error_num;
+    
     public:
-    const string &message;
-
-    PythonError(const string &message) :
-    message(message) {}
+    CustomError(int error_num, const string &message)
+    : full_message("Error opening file: [Errno " + to_string(error_num) + "] " + message),
+      error_num(error_num) {}
 
     const char* what() const noexcept override
     {
-        return message.c_str();
+        return full_message.c_str();
     }
 };
 
 int main(int argc, char **argv)
 {
-    string filename = argv[1];
     if (argc > 1)
     {
+        string filename = argv[1];
         try
         {
             cout << "=== Cyber Archives Recovery ===\n";
             cout << "Accessing file '" << filename << "'" << endl;
 
             if (filename.find("/etc/") != string::npos)
-                throw PythonError("forbidden");
+                throw CustomError(13, " Permission denied: '" + filename + "'");
         }
-        catch(const PythonError &e)
+        catch(const CustomError &e)
         {
-            if (strcmp(e.what(), "forbidden") == 0)
-                std::cerr << "Error opening file '" << filename << "': [Errno 13] Permission denied: '" << filename << "'" << '\n';
-            else if (strcmp(e.what(), "notfound") == 0)
-                std::cerr << "Error opening file '" << filename << "': [Errno 2]: No such file or directory: '" << filename << "'" << '\n';
+            std::cerr << e.what() << '\n';
         }
         
     }
