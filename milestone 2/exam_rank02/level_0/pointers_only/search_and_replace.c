@@ -1,14 +1,13 @@
 #include <unistd.h>
 
-void search_and_replace(char *str, char search, char replace)
+void search_and_replace(char *str, char *search, char *replace)
 {
     while (*str)
     {
-        if (*str == search)
+        if (*str == *search)
         {
             search = replace;
             write(1, &replace, 1);
-            str++;
         }
         else
             write(1, str, 1);
@@ -20,7 +19,7 @@ void search_and_replace(char *str, char search, char replace)
 int main(int argc, char **argv)
 {
     if (argc == 4)
-        search_and_replace(argv[1], *argv[2], *argv[3]);
+        search_and_replace(argv[1], argv[2], argv[3]);
     else
         write(1, "\n", 1);
 
