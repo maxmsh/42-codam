@@ -4,7 +4,7 @@ void first_word(char *str)
 {
     while (*str)
     {
-        if (((*str >= 65 && *str <= 90) || (*str >= 97 && *str <= 122)) && ((*(str + 1) == 32) || (*(str + 1) >= 9 && *str + 1 <= 13)))
+        if (((*str >= 65 && *str <= 90) || (*str >= 97 && *str <= 122)) && ((*(str + 1) == 32) || (*(str + 1) >= 9 && *(str + 1) <= 13)))
         {
             write(1, str, 1);
             break;
