@@ -9,7 +9,7 @@ void first_word(char *str)
             write(1, str, 1);
             break;
         }
-        else
+        if (!(*str == 32) && !(*str >= 9 && *str <= 13))
             write(1, str, 1);
         str++;
     }
