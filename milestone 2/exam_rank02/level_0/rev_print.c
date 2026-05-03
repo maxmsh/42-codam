@@ -1,4 +1,5 @@
 #include <unistd.h>
+#include <stdio.h>
 
 void rev_print(char *str)
 {
@@ -9,7 +10,11 @@ void rev_print(char *str)
     {
         i++;
     }
-    while (str[i] != str[0])
+    if (str[i] == '\0')
+    {
+        i--;
+    }
+    while (str[i] != '\0')
     {
         write(1, &str[i], 1);
         i--;
