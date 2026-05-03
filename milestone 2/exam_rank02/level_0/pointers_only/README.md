@@ -1,0 +1,1 @@
+This section of the milestone is not required to learn in order to train for the exam. This folder solely exists purely because I wanted to get the most out of my studies and therefore decided to challenge myself by trying out all of the exercises without the use of array indexers, and thus having to rely on pointers only. 
