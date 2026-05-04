@@ -1,18 +1,23 @@
 #include <unistd.h>
-#include <stdio.h>
 
-int main(void)
+void putnum(char c)
+{
+    
+}
+
+void fizzbuzz(int len)
 {
     int i;
     i = 0;
 
-    while (i <= 100)
+    while (i <= len)
     {
-        printf("%d", i);
-        if (i >= 10)
-            i = i - '0';
         write(1, &i, 1);
-        write(1, "\n", 1);
         i++;
     }
+}
+
+int main()
+{
+    fizzbuzz(100);
 }
