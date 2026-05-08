@@ -6,8 +6,8 @@ void search_and_replace(char *str, char *search, char *replace)
     {
         if (*str == *search)
         {
-            search = replace;
-            write(1, &replace, 1);
+            *str = *replace;
+            write(1, str, 1);
         }
         else
             write(1, str, 1);

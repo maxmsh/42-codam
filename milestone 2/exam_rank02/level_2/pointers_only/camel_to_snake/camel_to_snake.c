@@ -1,14 +1,16 @@
 #include <unistd.h>
 
-void rev_print(char *str)
+void camel_to_snake(char *str)
 {
     while (*str)
-        str++;
-    str--;
-    while (*str)
     {
+        if (*str >= 65 && *str <= 90)
+        {
+            write(1, "_", 1);
+            *str = *str + 32;
+        }
         write(1, str, 1);
-        str--;
+        str++;
     }
     write(1, "\n", 1);
 }
@@ -16,7 +18,7 @@ void rev_print(char *str)
 int main(int argc, char **argv)
 {
     if (argc == 2)
-        rev_print(argv[1]);
+        camel_to_snake(argv[1]);
     else
         write(1, "\n", 1);
 
