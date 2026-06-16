@@ -2,7 +2,7 @@
 
 void	ft_hello_garden()
 {
-	std::cout << "Hello, Garden!\n";
+	std::cout << "Hello, Garden Community!\n";
 }
 
 int		main(void)
