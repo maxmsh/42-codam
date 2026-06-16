@@ -17,7 +17,7 @@ public class ft_count_harvest_recursive {
         System.out.print("Days until harvest: ");
         Scanner scan = new Scanner(System.in);
         int num = scan.nextInt();
-        int i = 0;
+        int i = 1;
         while (i <= num)
         {
             ft_count_harvest_recursive(i, num);

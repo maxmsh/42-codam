@@ -2,7 +2,7 @@
 
 void	ft_count_harvest_iterative()
 {
-	int days_till_harvest, counter = 0;
+	int days_till_harvest, counter = 1;
 
 	std::cout << "Days until harvest: ";
 	std::cin >> days_till_harvest;
